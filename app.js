@@ -1,8 +1,7 @@
 const express = require('express')
 const app = express()
-const cros = require('cros')
 app.use(express.json())
-app.use(cros())
+
 
 const {open} = require('sqlite')
 const sqlite3 = require('sqlite3')
