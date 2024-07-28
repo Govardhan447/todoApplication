@@ -1,47 +1,34 @@
-GET http://localhost:3000/todos/?status=TO%20DO
 
-###
-GET http://localhost:3000/todos/?priority=MEDIUM
-
-###
-GET http://localhost:3000/todos/?priority=HIGH&status=IN%20PROGRESS
-
-###
-GET http://localhost:3000/todos/?search_q=Play
-
-###
-
-GET http://localhost:3000/todos/2
+GET http://localhost:3000/todos/
 
 ###
 POST http://localhost:3000/todos/
 Content-Type:application/json
 
 {
-  "id": 10,
-  "todo": "Finalize event theme",
-  "priority": "LOW",
-  "status": "TO DO"
+  "date":"2024-07-28",
+  "description": "saving money",
+  "credit": 5000,
+  "debit":0
 }
+
 ###
-PUT http://localhost:3000/todos/1/
+POST http://localhost:3000/todos/
 Content-Type:application/json
 
-{ "status": "DONE" }
-
-
+{
+  "date":"28-07-2024",
+  "description": "room rent",
+  "credit": 0,
+  "debit": 25
+}
 
 ###
-PUT http://localhost:3000/todos/2/
+
+PUT http://localhost:3000/todos//
 Content-Type:application/json
 
-{ "priority": "HIGH" }
+{ "debit": 1500 }
 
 ###
-PUT http://localhost:3000/todos/10/
-Content-Type:application/json
-
-{ "todo": "Some task" }
-
-###
-DELETE http://localhost:3000/todos/3/
+DELETE http://localhost:3000/todos/2/
