@@ -52,13 +52,12 @@ app.post('/todos/', async (request, response) => {
   const getPreviousBalanceQuery = `SELECT balance FROM transactions ORDER BY id DESC  LIMIT 1;`
   const lastTransaction = await db.get(getPreviousBalanceQuery)
 
-  let balance = lastTransaction !== undefined ? lastTransaction.balance : 0
-  console.log(balance)
-
+  let lastBalance = lastTransaction !== undefined ? lastTransaction.balance : 0
+  
   if (credit !== 0) {
-    balance = balance + credit
+    lastBalance = lastBalance + credit
   } else if (debit !== 0) {
-    balance = balance - debit
+    lastBalance = lastBalance - debit
   } else {
     response.send('Invaild transactions')
   }
@@ -72,7 +71,7 @@ app.post('/todos/', async (request, response) => {
               '${description}',
               ${credit}, 
               ${debit},
-              ${balance}
+              ${lastBalance}
               );`
   const dbResponse = await db.run(getToDoQuery)
   const newData = dbResponse.lastID
