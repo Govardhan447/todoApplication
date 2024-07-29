@@ -6,7 +6,7 @@ const dbpath = path.join(__dirname, 'transactions.db')
 const cors = require('cors')
 
 const app = express()
-app.use(cors())
+
 app.use(express.json())
 
 let db = null
@@ -30,11 +30,10 @@ initilizeDBAndServer()
 
 //GET API 2 todo table
 app.get('/todos/', async (request, response) => {
-  const {month} = request.params
   const getToDoQuery = `
           SELECT
           
-          id, date, description, amount, transactionType
+          id, date, description, credit, debit, balance
           
           FROM
             transactions
@@ -46,17 +45,18 @@ app.get('/todos/', async (request, response) => {
 
 //POST API 3 Create New todo
 app.post('/todos/', async (request, response) => {
-  const {id, date, description, amount, transactionType} = request.body
+  const {id, date, description, credit, debit, balance} = request.body
 
   const getToDoQuery = `
           INSERT INTO
-              transactions (id, date, description, amount, transactionType)
+              transactions (id, date, description, credit, debit, balance)
           VALUES
               ('${id}',
               '${date}', 
               '${description}',
-              ${amount}, 
-              '${transactionType}'
+              ${credit}, 
+              ${debit},
+              ${balance}
               );`
   const dbResponse = await db.run(getToDoQuery)
   const newData = dbResponse.lastID

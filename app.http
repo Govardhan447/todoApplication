@@ -8,8 +8,9 @@ Content-Type:application/json
 { "id":1,
   "date":"2024-07-28",
   "description": "saving money",
-  "amount": 5000,
-  "transactionType":"credit"
+  "credit": 5000,
+  "debit":0,
+  "balance":5000
 }
 
 ###
