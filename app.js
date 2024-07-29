@@ -67,7 +67,7 @@ app.post('/todos/', async (request, response) => {
           INSERT INTO
               transactions (id, date, description, credit, debit, balance)
           VALUES
-              ('${id}',
+              (${id},
               '${date}', 
               '${description}',
               ${credit}, 
