@@ -53,11 +53,10 @@ app.post('/todos/', async (request, response) => {
   const lastTransaction = await db.get(getPreviousBalanceQuery)
 
   let lastBalance = lastTransaction !== undefined ? lastTransaction.balance : 0
-  console.log(balance)
-
-  if (credit > 0) {
+  
+  if (credit !== 0) {
     lastBalance = lastBalance + credit
-  } else if (debit > 0) {
+  } else if (debit !== 0) {
     lastBalance = lastBalance - debit
   } else {
     response.send('Invaild transactions')
