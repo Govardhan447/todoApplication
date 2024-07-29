@@ -1,13 +1,12 @@
 const express = require('express')
 const {open} = require('sqlite')
 const sqlite3 = require('sqlite3')
-
 const path = require('path')
 const dbpath = path.join(__dirname, 'transactions.db')
 const cors = require('cors')
 
 const app = express()
-app.use(cors())
+
 app.use(express.json())
 
 let db = null
@@ -18,7 +17,7 @@ const initilizeDBAndServer = async () => {
       filename: dbpath,
       driver: sqlite3.Database,
     })
-    app.listen(process.env.PROT || 3000, () => {
+    app.listen(3000, () => {
       console.log('Server Runnning on http://localhost/3000/')
     })
   } catch (e) {
@@ -35,7 +34,7 @@ app.get('/todos/', async (request, response) => {
   const getToDoQuery = `
           SELECT
           
-          date, description, credit, debit,  (SUM(credit)-SUM(debit)) as balance
+          id, date, description, amount, transactionType
           
           FROM
             transactions
@@ -47,17 +46,20 @@ app.get('/todos/', async (request, response) => {
 
 //POST API 3 Create New todo
 app.post('/todos/', async (request, response) => {
-  const {date, description, credit, debit} = request.body
+  const {id, date, description, inputAmount, transactionType} = request.body
+
   const getToDoQuery = `
           INSERT INTO
-              transactions (date, description, credit, debit)
+              transactions (id, date, description, amount, transactionType)
           VALUES
-              (
+              (${id},
               '${date}', 
               '${description}',
-              ${credit}, 
-              ${debit});`
+              ${inputAmount}, 
+              '${transactionType}'
+              );`
   const dbResponse = await db.run(getToDoQuery)
+  const newData = dbResponse.lastID
   response.send(dbResponse)
 })
 
@@ -65,15 +67,15 @@ app.post('/todos/', async (request, response) => {
 app.put('/todos/:todoId/', async (request, response) => {
   const {todoId} = request.params
   const requestBody = request.body
-  const {description, credit, debit} = requestBody
+  const {description, inputAmount, transactionType} = requestBody
 
   const getToDoQuery = `
           UPDATE
             transactions
           SET
             description = '${description}',
-            credit = '${credit}',
-            debit = '${debit}'
+            amount = ${inputAmount},
+            transactionType = '${transactionType}'
           WHERE
             id = ${todoId};`
   data = await db.run(getToDoQuery)
