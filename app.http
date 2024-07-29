@@ -5,24 +5,12 @@ GET http://localhost:3000/todos/
 POST http://localhost:3000/todos/
 Content-Type:application/json
 
-{ "id":1,
+{ "id":3,
   "date":"2024-07-28",
   "description": "saving money",
-  "credit": 5000,
-  "debit":0,
-  "balance":5000
-}
-
-###
-POST http://localhost:3000/todos/
-Content-Type:application/json
-
-{
-  "id":1,
-  "date":"2024-07-28",
-  "description": "saving money",
-  "amount": 5000,
-  "transactionType":"debit"
+  "credit": 0,
+  "debit":300
+  
 }
 
 ###

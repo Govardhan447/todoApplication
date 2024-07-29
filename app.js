@@ -6,7 +6,7 @@ const dbpath = path.join(__dirname, 'transactions.db')
 const cors = require('cors')
 
 const app = express()
-
+app.use(cors())
 app.use(express.json())
 
 let db = null
@@ -45,7 +45,23 @@ app.get('/todos/', async (request, response) => {
 
 //POST API 3 Create New todo
 app.post('/todos/', async (request, response) => {
-  const {id, date, description, credit, debit, balance} = request.body
+  const {id, date, description, credit, debit} = request.body
+
+  //Fetch last transaction balance
+
+  const getPreviousBalanceQuery = `SELECT balance FROM transactions ORDER BY id DESC  LIMIT 1;`
+  const lastTransaction = await db.get(getPreviousBalanceQuery)
+
+  let balance = lastTransaction !== undefined ? lastTransaction.balance : 0
+  console.log(balance)
+
+  if (credit !== 0) {
+    balance = balance + credit
+  } else if (debit !== 0) {
+    balance = balance - debit
+  } else {
+    response.send('Invaild transactions')
+  }
 
   const getToDoQuery = `
           INSERT INTO
