@@ -8,7 +8,7 @@ Content-Type:application/json
 { "id":1,
   "date":"2024-07-28",
   "description": "saving money",
-  "inputAmount": 5000,
+  "amount": 5000,
   "transactionType":"credit"
 }
 
@@ -17,10 +17,11 @@ POST http://localhost:3000/todos/
 Content-Type:application/json
 
 {
-  "date":"28-07-2024",
-  "description": "room rent",
-  "credit": 0,
-  "debit": 2500
+  "id":1,
+  "date":"2024-07-28",
+  "description": "saving money",
+  "amount": 5000,
+  "transactionType":"debit"
 }
 
 ###

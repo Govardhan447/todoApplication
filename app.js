@@ -46,16 +46,16 @@ app.get('/todos/', async (request, response) => {
 
 //POST API 3 Create New todo
 app.post('/todos/', async (request, response) => {
-  const {id, date, description, inputAmount, transactionType} = request.body
+  const {id, date, description, amount, transactionType} = request.body
 
   const getToDoQuery = `
           INSERT INTO
               transactions (id, date, description, amount, transactionType)
           VALUES
-              (${id},
+              ('${id}',
               '${date}', 
               '${description}',
-              ${inputAmount}, 
+              ${amount}, 
               '${transactionType}'
               );`
   const dbResponse = await db.run(getToDoQuery)
@@ -67,14 +67,14 @@ app.post('/todos/', async (request, response) => {
 app.put('/todos/:todoId/', async (request, response) => {
   const {todoId} = request.params
   const requestBody = request.body
-  const {description, inputAmount, transactionType} = requestBody
+  const {description, amount, transactionType} = requestBody
 
   const getToDoQuery = `
           UPDATE
             transactions
           SET
             description = '${description}',
-            amount = ${inputAmount},
+            amount = ${amount},
             transactionType = '${transactionType}'
           WHERE
             id = ${todoId};`
